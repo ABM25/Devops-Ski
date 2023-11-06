@@ -1,37 +1,27 @@
-version: '3.8'
-
+version: '3'
 services:
-  # MySQL database service
   mysql:
-    image: mysql:latest
+    image: 'mysql:5.7'
+    container_name: mysql
+    restart: unless-stopped
     environment:
-      MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: stationSki
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
     ports:
       - "3306:3306"
     volumes:
-      - mysql-data:/var/lib/mysql
+      - db:/var/lib/mysql
 
-  # Spring Boot application service
-  app:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    ports:
-      - "8089:8089"
+  # Spring Boot Application Service
+  spring-app:
     image: ahmedbenabderrazak/gestion-station-ski:1.0
-    depends_on:
-      - mysql
+    container_name: stationSki
+    restart:  on-failure
     environment:
       SPRING_DATASOURCE_URL: jdbc:mysql://localhost:3306/stationSki?createDatabaseIfNotExist=true
       SPRING_DATASOURCE_USERNAME: root
-      SPRING_DATASOURCE_PASSWORD: root
-     
-
-
-
-
-
-
-volumes:
-  mysql-data:
+      SPRING_DATASOURCE_PASSWORD:
+    ports:
+      - "8089:8089"
+    depends_on:
+      - mysql
