@@ -1,35 +1,39 @@
-version: '3.3'
-
+version: '3.8'
 
 services:
-  mysqldb:
-    container_name: mysqldb
-    image: mysql:5.7
-    restart: unless-stopped
+  # MySQL database service
+  mysql:
+    image: mysql:latest
     environment:
-      - MYSQL_DATABASE=stationSki
-      - MYSQL_ALLOW_EMPTY_PASSWORD= yes
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: stationSki
     ports:
       - "3306:3306"
     volumes:
-      - db:/var/lib/mysql
+      - mysql-data:/var/lib/mysql
+
+  # Spring Boot application service
   app:
-    depends_on:
-      - mysqldb
-    image: ahmedbenabderrazak/gestion-station-ski:1.0
-    container_name: gestion-station-ski
-    restart: on-failure
+    build:
+      context: .
+      dockerfile: Dockerfile
     ports:
       - "8089:8089"
+    image: ahmedbenabderrazak/gestion-station-ski:1.0
+    depends_on:
+      - mysql
     environment:
-      SPRING_APPLICATION_JSON: '{
-        "spring.datasource.url"  : "jdbc:mysql://mysqldb:3306/stationSki?useSSL=false",
-        "spring.datasource.username" : "root",
-        "spring.jpa.properties.hibernate.dialect" : "org.hibernate.dialect.MySQL5InnoDBDialect",
-        "spring.jpa.hibernate.ddl-auto" : "update"
-      }'
-    volumes:
-      - .m2:/root/.m2
+      SPRING_DATASOURCE_URL: jdbc:mysql://localhost:3306/stationSki?createDatabaseIfNotExist=true
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+      MANAGEMENT_ENDPOINTS_WEB_EXPOSURE_INCLUDE: '*'
+      MANAGEMENT_ENDPOINT_PROMETHEUS_ENABLED: 'true'
+      MANAGEMENT_METRICS_EXPORT_PROMETHEUS_ENABLED: 'true'
+
+
+
+
+
 
 volumes:
-  db:
+  mysql-data:
