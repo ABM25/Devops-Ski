@@ -14,7 +14,7 @@ services:
 
   # Spring Boot Application Service
   spring-app:
-    image: ahmedbenabderrazak648/gestion-station-ski:1.0
+    image: ahmedbenmami/gestion-station-ski:1.0
     container_name: stationSki
     restart:  on-failure
     environment:
