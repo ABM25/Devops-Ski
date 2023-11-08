@@ -2,7 +2,7 @@ version: '3.3'
 
 services:
   mysqldb1:
-    container_name: mysqldb1
+    container_name: mysqldb
     image: mysql:5.7
     restart: unless-stopped
     environment:
@@ -15,7 +15,7 @@ services:
 
   app:
     depends_on:
-      - mysqldb1  # Updated reference to the renamed MySQL container
+      - mysqldb  # Updated reference to the renamed MySQL container
     image: jihene1999/gestion-station-ski:1.0
     container_name: gestion-station-ski
     restart: on-failure
