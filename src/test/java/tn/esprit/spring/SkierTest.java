@@ -3,69 +3,89 @@ package tn.esprit.spring;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import tn.esprit.spring.entities.Skier;
 import tn.esprit.spring.entities.Subscription;
+import tn.esprit.spring.entities.TypeSubscription;
 import tn.esprit.spring.repositories.ISkierRepository;
+import tn.esprit.spring.repositories.ISubscriptionRepository;
 import tn.esprit.spring.services.SkierServicesImpl;
-
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 
+import java.time.LocalDate;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.when;
 
-class SkierTest {
-
-    @MockBean
-    private ISkierRepository skierRepository;
+public class SkierTest {
 
     @InjectMocks
     private SkierServicesImpl skierServices;
 
-    Skier skier = new Skier(Long.valueOf(1),"Sinko","Kiko", LocalDate.of(1999,6,9),"Tunis", new Subscription(),null,null);
+    @Mock
+    private ISkierRepository skierRepository;
 
-    List<Skier> liste= new ArrayList<Skier>(){
-        {
-            add( new Skier(Long.valueOf(2),"Bubu","Dudu", LocalDate.of(2007,2,14),"Tunis", new Subscription(),null,null));
-            add( new Skier(Long.valueOf(3),"Qoobe","kawéb", LocalDate.of(2004,9,10),"Tunis", new Subscription(),null,null));
+    @Mock
+    private ISubscriptionRepository subscriptionRepository;
 
-        }
-
-    };
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
     }
 
     @Test
-    void testRetrieveSkier() {
-        // Arrange
-        Long skierId = 1L;
+    void testAddSkier() {
+        // Créez un objet Skier pour le test
         Skier skier = new Skier();
-        when(skierRepository.findById(skierId)).thenReturn(Optional.of(skier));
+        skier.setFirstName("Bubu");
+        skier.setLastName("Dudu");
+        skier.setDateOfBirth(LocalDate.of(1998, 11, 10));
 
-        // Act
-        Skier retrievedSkier = skierServices.retrieveSkier(skierId);
+        Subscription subscription = new Subscription();
+        subscription.setTypeSub(TypeSubscription.ANNUAL);
+        subscription.setStartDate(LocalDate.now());
 
-        // Assert
-        assertEquals(skier, retrievedSkier);
-        verify(skierRepository, times(1)).findById(skierId);
+        skier.setSubscription(subscription);
+
+
+        when(subscriptionRepository.save(any(Subscription.class))).thenReturn(subscription);
+        when(skierRepository.save(any(Skier.class))).thenReturn(skier);
+
+        // Appelez la méthode du service à tester
+        Skier result = skierServices.addSkier(skier);
+
+        // Vérifiez les résultats
+        assertNotNull(result);
+        assertEquals("Bubu", result.getFirstName());
+        assertEquals("Dudu", result.getLastName());
+        assertNotNull(result.getSubscription());
+        assertNotNull(result.getSubscription().getEndDate());
+
     }
 
+
     @Test
-    void testRemoveSkier() {
-        // Arrange
-        Long skierId = 1L;
+    void testRetrieveSkier() {
 
-        // Act
-        skierServices.removeSkier(skierId);
+        Long numSkier = 1L;
 
-        // Assert
-        verify(skierRepository, times(1)).deleteById(skierId);
+        Skier skier = new Skier();
+        skier.setFirstName("Alice");
+        skier.setLastName("Wonderland");
+        skier.setDateOfBirth(LocalDate.of(1995, 10, 15));
+
+
+        when(skierRepository.findById(numSkier)).thenReturn(Optional.of(skier));
+
+        Skier result = skierServices.retrieveSkier(numSkier);
+
+        assertNotNull(result);
+        assertEquals("Alice", result.getFirstName());
+        assertEquals("Wonderland", result.getLastName());
+        assertEquals(LocalDate.of(1995, 10, 15), result.getDateOfBirth());
     }
 }
