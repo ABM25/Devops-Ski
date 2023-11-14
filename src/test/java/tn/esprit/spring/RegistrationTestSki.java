@@ -1,4 +1,3 @@
-
 package tn.esprit.spring;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -29,7 +28,7 @@ public class RegistrationTestSki {
     @Mock
     private ICourseRepository courseRepository;
     @InjectMocks
-private RegistrationServicesImpl registrationServices;
+    private RegistrationServicesImpl registrationServices;
     @Test
     public void testAddRegistrationAndAssignToSkier() {
         Skier skier = new Skier();
@@ -62,4 +61,3 @@ private RegistrationServicesImpl registrationServices;
         assertEquals(result, registrationCaptor.getValue());
     }
 }
-
