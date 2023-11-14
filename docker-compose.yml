@@ -37,23 +37,23 @@ services:
       - .m2:/root/.m2
   prometheus:
     image: prom/prometheus
-    container_name: prometheussane
-    restart: on-failure
+    container_name: prometheusjihene
+    restart: unless-stopped
     volumes:
       - ./prometheus.yml:/etc/prometheus/prometheus.yml
     command:
       - --config.file=/etc/prometheus/prometheus.yml
     ports:
-      - "9091:9090"
+      - "9090:9090"
     networks:
       - monitoring
 
   grafana:
       image: grafana/grafana
-      container_name: grafanasane
-      restart: on-failure
+      container_name: grafanajihene
+      restart: unless-stopped
       ports:
-        - "3001:3000"
+        - "3000:3000"
       depends_on:
         - prometheus
       volumes:
