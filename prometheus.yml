@@ -1,0 +1,14 @@
+scrape_configs:
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+
+  - job_name: 'Jenkins'
+    metrics_path: /prometheus
+    static_configs:
+      - targets: ['172.20.10.7:8080']
+
+  - job_name: 'Maven'
+    metrics_path: /api/actuator/prometheus
+    static_configs:
+      - targets: ['172.20.10.7:8089']
