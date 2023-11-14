@@ -118,7 +118,7 @@
 				<version>3.0.0</version> <!-- Use the latest version -->
 			</plugin>
 
-
+			<!-- Use the latest version -->
 		</plugins>
 	</build>
 
