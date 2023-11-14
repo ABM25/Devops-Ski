@@ -9,7 +9,7 @@ services:
       MYSQL_DATABASE: stationSki
       MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
     ports:
-      - "3307:3306"  # Port de l'hôte : Port du conteneur MySQL
+      - "3307:3306"
     volumes:
       - db:/var/lib/mysql
 
@@ -20,11 +20,11 @@ services:
     container_name: gestion-station-ski
     restart: on-failure
     ports:
-      - "8089:8089"  # Port de l'hôte : Port de l'application Spring Boot
+      - "5256:5256"
     environment:
       SPRING_APPLICATION_JSON: '{
         "server.servlet.context-path": "/api",
-        "server.port": "8089",
+        "server.port": "5256",
         "spring.mvc.format.date": "yyyy-MM-dd",
         "spring.datasource.url": "jdbc:mysql://mysqldb:3307/stationSki?useSSL=false",
         "spring.datasource.username": "root",
@@ -36,5 +36,36 @@ services:
     volumes:
       - .m2:/root/.m2
 
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheussane
+    restart: on-failure
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+    ports:
+      - "9091:9090"
+    networks:
+      - monitoring
+
+  grafana:
+    image: grafana/grafana
+    container_name: grafanasane
+    restart: on-failure
+    ports:
+      - "3001:3000"
+    depends_on:
+      - prometheus
+    volumes:
+      - grafana-data:/var/lib/grafana
+    networks:
+      - monitoring
+
+networks:
+  monitoring:
+    driver: bridge
+
 volumes:
   db:
+  grafana-data:
