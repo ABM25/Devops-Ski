@@ -10,7 +10,7 @@ scrape_configs:
     static_configs:
       - targets: ['192.168.36.168:8080']
   - job_name: 'ski_gestion'
-    metrics_path: /api/actuator/prometheus
+    metrics_path: /examen/actuator/prometheus
     static_configs:
       - targets: ['192.168.36.168:5256']
 
