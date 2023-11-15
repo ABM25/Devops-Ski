@@ -45,7 +45,7 @@ services:
     command:
       - --config.file=/etc/prometheus/prometheus.yml
     ports:
-      - "9091:9090"
+      - "9090:9090"
     networks:
       - monitoring
 
@@ -54,7 +54,7 @@ services:
     container_name: grafanasane
     restart: on-failure
     ports:
-      - "3001:3000"
+      - "3000:3000"
     depends_on:
       - prometheus
     volumes:
