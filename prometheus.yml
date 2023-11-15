@@ -12,7 +12,7 @@ scrape_configs:
       - targets: ['192.168.1.40:8080']
 
   - job_name: 'Spring'
-    metrics_path: /api/actuator/prometheus
+    metrics_path: /actuator/prometheus
     static_configs:
     - targets: ['192.168.1.40:8089']
 
