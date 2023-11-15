@@ -5,12 +5,12 @@ global:
 scrape_configs:
   - job_name: 'prometheus'
     static_configs:
-      - targets: ['172.20.10.7:9090']
+      - targets: ['192.168.1.115:9090']
   - job_name: 'jenkins'
     metrics_path: /prometheus
     static_configs:
-      - targets: ['172.20.10.7:8080']
+      - targets: ['192.168.1.115:8080']
   - job_name: 'ski_gest'
     metrics_path: /api/actuator/prometheus
     static_configs:
-      - targets: ['172.20.10.7:8089']
+      - targets: ['192.168.1.115:8089']
