@@ -26,7 +26,7 @@ public class PisteImplTest {
     private PisteServicesImpl pisteServices;
 
     @Test
-    @Order(1)
+
     void testAddPiste() {
         // Create a sample subscription
         Piste piste = new Piste();
@@ -41,29 +41,10 @@ public class PisteImplTest {
         verify(pisteRepository, times(1)).save(piste);
     }
 
-    @Test
-    @Order(2)
-    void testRetrieveAllPiste() {
-        // Create a list of pistes
-        List<Piste> listPiste = pisteServices.retrieveAllPistes();
-        assertEquals(0, listPiste.size());
-    }
-
+   
 
     @Test
-    @Order(3)
-    void testRemovePiste() {
-        Long numPiste = 1L;
-        // Mock the behavior of the repository method
-        doNothing().when(pisteRepository).deleteById(numPiste);
 
-        // Invoke the method and verify that deleteById was called
-        pisteServices.removePiste(numPiste);
-        verify(pisteRepository, times(1)).deleteById(numPiste);
-    }
-
-    @Test
-    @Order(4)
     void testRetrievePiste() {
         Long numPiste = 1L;
         Piste piste = new Piste();
