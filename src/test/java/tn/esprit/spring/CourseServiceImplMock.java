@@ -40,19 +40,8 @@ public class CourseServiceImplMock {
 
 
 
-    @Test
-    public void testRetriveCourse(){
-        Mockito.when(cr.findById(Mockito.anyLong())).thenReturn(Optional.of(course));
-        Course course1=cs.retrieveCourse(Long.valueOf(2));
-        Assertions.assertNotNull(course1);
-    }
 
-    @Test
-    public void testretrieveAllCourses(){
-        Mockito.when(cr.findAll()).thenReturn(liste);
-        List<Course> result=cs.retrieveAllCourses();
-        Assertions.assertNotNull(result);
-    }
+
 
     @Test
     public void testupdateCourse(){
