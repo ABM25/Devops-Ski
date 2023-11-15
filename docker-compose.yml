@@ -12,27 +12,22 @@ services:
     volumes:
       - db:/var/lib/mysql
 
-  app:
-    depends_on:
-      - mysqldb
-    image: faresmenzli/gestion-station-ski
-    container_name: backapp-container
+  spring-app:
+    image: faresmenzli/gestion-station-ski:1.0
+    container_name: gestion-station-ski
     restart: on-failure
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/stationSki?createDatabaseIfNotExist=true
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD:
     ports:
       - "8089:8089"
-    expose:
-      - '8089'
-    environment:
-      SPRING_APPLICATION_JSON: '{
-        "spring.datasource.url" : "jdbc:mysql://mysqldb:3306/stationSki?createDatabaseIfNotExist=true",
-        "spring.datasource.username" : "root",
-        "spring.datasource.password" : "password",
-        "spring.jpa.properties.hibernate.dialect" : "org.hibernate.dialect.MySQL5InnoDBDialect",
-        "spring.jpa.hibernate.ddl-auto" : "update"
-        }'
-    build:
-      context: .
-      dockerfile: Dockerfile
-    volumes:
-      - m2:/root/.m2
+    depends_on:
+      - mysql
 
+networks:
+  monitoring:
+
+
+volumes:
+  db:
