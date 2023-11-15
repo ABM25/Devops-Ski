@@ -12,6 +12,6 @@ scrape_configs:
   - job_name: 'ski_gestion'
     metrics_path: /api/actuator/prometheus
     static_configs:
-      - targets: ['192.168.36.168:8089']
+      - targets: ['192.168.36.168:5256']
 
 
