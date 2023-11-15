@@ -30,9 +30,6 @@ class InstructorServicesImplTest {
     @Mock
     private IInstructorRepository instructorRepository;
 
-    @Mock
-    private ICourseRepository courseRepository;
-
     @InjectMocks
     private InstructorServicesImpl instructorServices;
 
