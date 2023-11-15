@@ -41,7 +41,7 @@ public class PisteImplTest {
         verify(pisteRepository, times(1)).save(piste);
     }
 
-   
+
 
     @Test
 
