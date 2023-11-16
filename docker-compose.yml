@@ -39,7 +39,7 @@ services:
   prometheus:
     image: prom/prometheus
     container_name: prometheussane
-    restart: on-failure
+    restart: unless-stopped
     volumes:
       - ./prometheus.yml:/etc/prometheus/prometheus.yml
     command:
@@ -52,7 +52,7 @@ services:
   grafana:
     image: grafana/grafana
     container_name: grafanasane
-    restart: on-failure
+    restart: unless-stopped
     ports:
       - "3000:3000"
     depends_on:
