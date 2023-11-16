@@ -1,15 +1,15 @@
 package tn.esprit.spring;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.Test;
+
+import org.junit.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.junit.MockitoJUnitRunner;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
 import tn.esprit.spring.entities.Course;
-import tn.esprit.spring.entities.Registration;
 import tn.esprit.spring.entities.Support;
 import tn.esprit.spring.entities.TypeCourse;
 import tn.esprit.spring.repositories.ICourseRepository;
@@ -23,7 +23,9 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @SpringBootTest
 @ExtendWith(MockitoExtension.class)
-public class CourseServiceImplMock {
+@RunWith(MockitoJUnitRunner.class)
+
+public class CourseServiceImplMockTest {
 
     @Mock
     ICourseRepository cr;
