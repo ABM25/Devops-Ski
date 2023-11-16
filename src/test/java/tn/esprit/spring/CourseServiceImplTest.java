@@ -14,6 +14,9 @@ import tn.esprit.spring.services.ICourseServices;
 import java.util.HashSet;
 import java.util.List;
 
+import static tn.esprit.spring.entities.Support.SKI;
+import static tn.esprit.spring.entities.TypeCourse.COLLECTIVE_CHILDREN;
+
 @SpringBootTest
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class CourseServiceImplTest {
@@ -23,7 +26,7 @@ public class CourseServiceImplTest {
     @Autowired
     ICourseServices cs;
 
-    Course c=new Course(Long.valueOf(1), 1, TypeCourse.COLLECTIVE_CHILDREN, Support.SKI, new Float(0), 1, new HashSet<Registration>());
+    Course c=new Course(2,COLLECTIVE_CHILDREN,SKI, 12F,2);
 
     @AfterEach
     public void tearDown() {
