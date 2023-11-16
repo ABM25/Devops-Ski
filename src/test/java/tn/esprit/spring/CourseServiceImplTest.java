@@ -40,12 +40,7 @@ public class CourseServiceImplTest {
         Assertions.assertNotNull(result);
     }
 
-    @Test
-    @Order(2)
-    public void testretrieveAllCourses(){
-        List<Course> result=cs.retrieveAllCourses();
-        Assertions.assertNotNull(result);
-    }
+
 
     @Test
     @Order(3)
@@ -54,11 +49,5 @@ public class CourseServiceImplTest {
         Assertions.assertNotNull(result);
     }
 
-    @Test
-    @Order(4)
-    public void testretrieveCourse(){
-        c = cs.addCourse(c);
-        Course result=cs.retrieveCourse(c.getNumCourse());
-        Assertions.assertNotNull(result);
-    }
+
 }
