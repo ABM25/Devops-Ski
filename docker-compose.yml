@@ -2,7 +2,7 @@ version: '3'
 services:
   mysql:
     image: 'mysql:5.7'
-    container_name: mysql25
+    container_name: mysql
     restart: unless-stopped
     environment:
       MYSQL_DATABASE: stationSki
@@ -14,20 +14,20 @@ services:
 
   spring-app:
     image: ahmedbenmami/gestion-station-ski:1.0
-    container_name: stationSki25
+    container_name: stationSki
     restart: on-failure
     environment:
       SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/stationSki?createDatabaseIfNotExist=true
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD:
     ports:
-      - "8080:8089"
+      - "8089:8089"
     depends_on:
       - mysql
 
   prometheus:
     image: prom/prometheus
-    container_name: prometheus25
+    container_name: prometheus1
     restart: unless-stopped
     volumes:
       - ./prometheus.yml:/etc/prometheus/prometheus.yml
@@ -40,7 +40,7 @@ services:
 
   grafana:
     image: grafana/grafana
-    container_name: grafana25
+    container_name: grafana1
     restart: unless-stopped
     ports:
       - "3000:3000"
