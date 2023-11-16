@@ -1,15 +1,16 @@
 global:
-  scrape_interval: 15s
+  scrape_interval:     15s
 
 scrape_configs:
   - job_name: 'prometheus'
     static_configs:
       - targets: ['192.168.1.24:9090']
   - job_name: 'jenkins'
+    metrics_path: /prometheus
     static_configs:
       - targets: ['192.168.1.24:8080']
   - job_name: 'ski_gestion'
-    metrics_path: '/examen/actuator/prometheus'
+    metrics_path: /examen/actuator/prometheus
     static_configs:
       - targets: ['192.168.1.24:5256']
 
